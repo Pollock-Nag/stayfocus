@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do App</title>
+    <link rel="stylesheet" href="index.css">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+
+
+
+
+</head>
+
+<body>
+    <div class="title">
+        <h2>Pomodoro & To-Do</h2>
+    </div>
+    <!-- music-->
+    <div>
+        <a href="https://www.youtube.com/playlist?list=PLfq8dexAV6GF8EpGnQhy5GLTDzndPslI4" target="_blank"
+            class="link-warning opacity-75 d-flex justify-content-center p-1 mb-5 ">Find Some Focus Music
+            Here</a>
+    </div>
+
+
+    <!-- pomodoro-->
+    <div class="pomodoro">
+
+
+        <!-- pomodoro container -->
+        <div class="text-white fs-4 text-center p-3">
+
+            <div class="row d-flex justify-content-center">
+                <!-- Work -->
+                <div class="col-sm-3">
+                    <div class="card border-0 opacity-75 bg-dark ">
+                        <div class="card-body">
+                            <h5 class="card-title">Work</h5>
+                            <p class="card-text fs-1">
+
+                                <span id="work_mins">25</span>
+                                <span>:</span>
+                                <span id="work_sec">00 </span>
+
+                            <div class="fs-6">
+                                <span>#</span>
+                                <span id="cycleCount">0</span>
+                            </div>
+
+
+
+                            </p>
+
+                            <div>
+                                <span>
+                                    <button class="btn btn-outline-success" id="start_work_button"
+                                        onclick="start_work_time()">Start</button>
+                                    <button class="btn btn-outline-light" onclick="pause()">Pause</button>
+                                    <button class="btn btn-outline-danger" onclick="reset()">Reset Window</button>
+
+                                </span>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                <!-- Break -->
+                <div class="col-sm-3">
+                    <div class="card border-0 opacity-75 bg-dark ">
+                        <div class="card-body">
+                            <h5 class="card-title">Break</h5>
+                            <p class="card-text fs-1">
+
+                                <span id="break_mins">5</span>
+                                <span>:</span>
+                                <span id="break_sec">00 </span>
+
+                            <div class="fs-6">
+                                <span>#</span>
+                                <span id="break_cycleCount">0</span>
+                            </div>
+
+
+
+                            </p>
+
+                            <div>
+                                <span>
+                                    <button class="btn btn-outline-success" id="start_break_button"
+                                        onclick="start_break_time()">Start</button>
+                                    <button class="btn btn-outline-light" onclick="pause()">Pause</button>
+
+                                </span>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+    </div>
+
+
+    <br>
+    <!-- TO-DO -->
+    <div class="todo">
+        <div class="input_field">
+            <input id="task_input" type="text" placeholder="task">
+            <button id="add" class="btn btn-outline-primary btn-sm bg-dark opacity-75" onclick="add_task()">Add</button>
+        </div>
+
+        <div class="output_field">
+            <ul id="output"></ul>
+        </div>
+
+    </div>
+
+
+
+
+
+    <script src="./index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+
+
+
+
+
+</body>
+
+</html>
