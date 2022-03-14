@@ -54,7 +54,6 @@ const add_task = () => {
 //POMODORO
 
 //interval worker for working time
-
 //stackoverflow for timing correction after deploying
 (function () {
     var $momentum;
@@ -166,7 +165,7 @@ const add_task = () => {
     window.setTimeout = patchedSetTimeout;
     window.clearTimeout = patchedClearTimeout;
 })();
-
+//stackoverflow for timing correction after deploying
 
 
 
