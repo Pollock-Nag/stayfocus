@@ -215,7 +215,7 @@ const start_work_time = () => {
 
             }
 
-        }, 10);
+        }, 1000);
     document.getElementById("start_work_button").disabled = false;
 
 
@@ -313,7 +313,7 @@ const start_break_time = () => {
 
             }
 
-        }, 10)
+        }, 1000)
     document.getElementById("start_break_button").disabled = false;
 
 }
