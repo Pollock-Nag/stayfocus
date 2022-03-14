@@ -52,6 +52,10 @@ const add_task = () => {
 
 
 //POMODORO
+
+//interval worker for working time
+
+
 const start_work_time = () => {
     const work_min_display = document.getElementById("work_mins");
     const work_sec_display = document.getElementById("work_sec");
@@ -62,11 +66,13 @@ const start_work_time = () => {
     let temp = work_min;
     let work_sec = 60;
 
+    work_min_display.innerHTML = work_min - 1;
 
     let time = setInterval(
 
 
         function () {
+            self.postMessage('tick');
             document.getElementById("start_work_button").disabled = true;
             document.getElementById("start_break_button").disabled = true;
             //console.log(work_sec);
@@ -94,11 +100,115 @@ const start_work_time = () => {
 
             }
 
-        }, 1000)
+        }, 10);
     document.getElementById("start_work_button").disabled = false;
 
 
 }
+
+
+/*const start_work_time = () => {
+    const work_min_display = document.getElementById("work_mins");
+    const work_sec_display = document.getElementById("work_sec");
+    const cycle_count_display = document.getElementById("cycleCount");
+
+    let work_min = parseInt(work_min_display.textContent);
+    let cycle_count = parseInt(cycle_count_display.textContent);
+    let temp = work_min;
+    let work_sec = 60;
+
+    work_min_display.innerHTML = work_min - 1;
+
+    let intervalWorker = new Worker('worker.js');
+    intervalWorker.onmessage = function () {
+
+        document.getElementById("start_work_button").disabled = true;
+        document.getElementById("start_break_button").disabled = true;
+        //console.log(work_sec);
+        work_sec--;
+        work_sec_display.innerHTML = work_sec;
+        if (work_sec == 0) {
+            work_sec += 60;
+            //console.log("done")
+            work_min--;
+            work_min_display.innerHTML = work_min;
+            if (work_min == 0) {
+
+
+                play_alarm();
+
+                clearInterval(time);
+                cycle_count += 1;
+                //console.log(cycle_count);
+                cycle_count_display.innerHTML = cycle_count;
+                work_min = temp;
+                work_min_display.innerHTML = work_min;
+                document.getElementById("start_work_button").disabled = false;
+                document.getElementById("start_break_button").disabled = false;
+            }
+
+        }
+
+    };
+
+    document.getElementById("start_work_button").disabled = false;
+
+
+}*/
+
+/*const test = () => {
+    const work_min_display = document.getElementById("work_mins");
+    const work_sec_display = document.getElementById("work_sec");
+    const cycle_count_display = document.getElementById("cycleCount");
+
+    let work_min = parseInt(work_min_display.textContent);
+    let cycle_count = parseInt(cycle_count_display.textContent);
+    let temp = work_min;
+    let work_sec = 60;
+
+
+}*/
+
+/*const start_break_time = () => {
+    const break_min_display = document.getElementById("break_mins");
+    const break_sec_display = document.getElementById("break_sec");
+    const cycle_count_display = document.getElementById("break_cycleCount");
+
+    let break_min = parseInt(break_min_display.textContent);
+    let cycle_count = parseInt(cycle_count_display.textContent);
+    let temp = break_min;
+    let break_sec = 60;
+
+
+    intervalWorker.onmessage = function () {
+        document.getElementById("start_break_button").disabled = true;
+        document.getElementById("start_work_button").disabled = true;
+        //console.log(break_sec);
+        break_sec--;
+        break_sec_display.innerHTML = break_sec;
+        if (break_sec == 0) {
+            break_sec += 60;
+            //console.log("done")
+            break_min--;
+            break_min_display.innerHTML = break_min;
+            if (break_min == 0) {
+                clearInterval(time);
+                play_alarm();
+                cycle_count += 1;
+                //console.log(cycle_count);
+                cycle_count_display.innerHTML = cycle_count;
+                break_min = temp;
+                break_min_display.innerHTML = break_min;
+                document.getElementById("start_break_button").disabled = false;
+                document.getElementById("start_work_button").disabled = false;
+            }
+
+        }
+
+    };
+    document.getElementById("start_break_button").disabled = false;
+
+}*/
 
 const start_break_time = () => {
     const break_min_display = document.getElementById("break_mins");
@@ -110,9 +220,11 @@ const start_break_time = () => {
     let temp = break_min;
     let break_sec = 60;
 
+    break_min_display.innerHTML = break_min - 1;
 
     let time = setInterval(
         function () {
+            self.postMessage('tick');
             document.getElementById("start_break_button").disabled = true;
             document.getElementById("start_work_button").disabled = true;
             //console.log(break_sec);
@@ -137,7 +249,7 @@ const start_break_time = () => {
 
             }
 
-        }, 1000)
+        }, 10)
     document.getElementById("start_break_button").disabled = false;
 
 }
