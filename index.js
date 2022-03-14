@@ -186,7 +186,7 @@ const start_work_time = () => {
 
 
         function () {
-            postMessage('tick');
+            Worker.postMessage('tick');
             document.getElementById("start_work_button").disabled = true;
             document.getElementById("start_break_button").disabled = true;
             //console.log(work_sec);
@@ -287,7 +287,7 @@ const start_break_time = () => {
 
     let time = window.setInterval(
         function () {
-            postMessage('tick');
+            Worker.postMessage('tick');
             document.getElementById("start_break_button").disabled = true;
             document.getElementById("start_work_button").disabled = true;
             //console.log(break_sec);
