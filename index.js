@@ -56,7 +56,7 @@ const add_task = () => {
 //interval worker for working time
 
 //stackoverflow
-(function () {
+/*(function () {
     var $momentum;
 
     function createWorker() {
@@ -166,7 +166,7 @@ const add_task = () => {
     window.setTimeout = patchedSetTimeout;
     window.clearTimeout = patchedClearTimeout;
 })();
-
+*/
 
 
 
@@ -180,6 +180,7 @@ const start_work_time = () => {
     let temp = work_min;
     let work_sec = 60;
 
+    work_min = work_min - 1;
     work_min_display.innerHTML = work_min - 1;
 
     let time = window.setInterval(
@@ -283,6 +284,7 @@ const start_break_time = () => {
     let temp = break_min;
     let break_sec = 60;
 
+    break_min = break_min - 1;
     break_min_display.innerHTML = break_min - 1;
 
     let time = window.setInterval(
