@@ -182,7 +182,7 @@ const start_work_time = () => {
 
     work_min_display.innerHTML = work_min - 1;
 
-    let time = setInterval(
+    let time = window.setInterval(
 
 
         function () {
@@ -285,9 +285,9 @@ const start_break_time = () => {
 
     break_min_display.innerHTML = break_min - 1;
 
-    let time = setInterval(
+    let time = window.setInterval(
         function () {
-            self.postMessage('tick');
+            postMessage('tick');
             document.getElementById("start_break_button").disabled = true;
             document.getElementById("start_work_button").disabled = true;
             //console.log(break_sec);
