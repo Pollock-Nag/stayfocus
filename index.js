@@ -55,8 +55,8 @@ const add_task = () => {
 
 //interval worker for working time
 
-//stackoverflow
-/*(function () {
+//stackoverflow for timing correction after deploying
+(function () {
     var $momentum;
 
     function createWorker() {
@@ -166,7 +166,7 @@ const add_task = () => {
     window.setTimeout = patchedSetTimeout;
     window.clearTimeout = patchedClearTimeout;
 })();
-*/
+
 
 
 
@@ -198,7 +198,7 @@ const start_work_time = () => {
                 //console.log("done")
                 work_min--;
                 work_min_display.innerHTML = work_min;
-                if (work_min == 0) {
+                if (work_min == -1) {
 
 
                     play_alarm();
@@ -215,7 +215,7 @@ const start_work_time = () => {
 
             }
 
-        }, 1000);
+        }, 10);
     document.getElementById("start_work_button").disabled = false;
 
 
@@ -299,7 +299,7 @@ const start_break_time = () => {
                 //console.log("done")
                 break_min--;
                 break_min_display.innerHTML = break_min;
-                if (break_min == 0) {
+                if (break_min == -1) {
                     clearInterval(time);
                     play_alarm();
                     cycle_count += 1;
@@ -313,7 +313,7 @@ const start_break_time = () => {
 
             }
 
-        }, 1000)
+        }, 10)
     document.getElementById("start_break_button").disabled = false;
 
 }
