@@ -55,6 +55,120 @@ const add_task = () => {
 
 //interval worker for working time
 
+//stackoverflow
+(function () {
+    var $momentum;
+
+    function createWorker() {
+        var containerFunction = function () {
+            var idMap = {};
+
+            self.onmessage = function (e) {
+                if (e.data.type === 'setInterval') {
+                    idMap[e.data.id] = setInterval(function () {
+                        self.postMessage({
+                            type: 'fire',
+                            id: e.data.id
+                        });
+                    }, e.data.delay);
+                } else if (e.data.type === 'clearInterval') {
+                    clearInterval(idMap[e.data.id]);
+                    delete idMap[e.data.id];
+                } else if (e.data.type === 'setTimeout') {
+                    idMap[e.data.id] = setTimeout(function () {
+                        self.postMessage({
+                            type: 'fire',
+                            id: e.data.id
+                        });
+                        // remove reference to this timeout after is finished
+                        delete idMap[e.data.id];
+                    }, e.data.delay);
+                } else if (e.data.type === 'clearCallback') {
+                    clearTimeout(idMap[e.data.id]);
+                    delete idMap[e.data.id];
+                }
+            };
+        };
+
+        return new Worker(URL.createObjectURL(new Blob([
+            '(',
+            containerFunction.toString(),
+            ')();'
+        ], { type: 'application/javascript' })));
+    }
+
+    $momentum = {
+        worker: createWorker(),
+        idToCallback: {},
+        currentId: 0
+    };
+
+    function generateId() {
+        return $momentum.currentId++;
+    }
+
+    function patchedSetInterval(callback, delay) {
+        var intervalId = generateId();
+
+        $momentum.idToCallback[intervalId] = callback;
+        $momentum.worker.postMessage({
+            type: 'setInterval',
+            delay: delay,
+            id: intervalId
+        });
+        return intervalId;
+    }
+
+    function patchedClearInterval(intervalId) {
+        $momentum.worker.postMessage({
+            type: 'clearInterval',
+            id: intervalId
+        });
+
+        delete $momentum.idToCallback[intervalId];
+    }
+
+    function patchedSetTimeout(callback, delay) {
+        var intervalId = generateId();
+
+        $momentum.idToCallback[intervalId] = function () {
+            callback();
+            delete $momentum.idToCallback[intervalId];
+        };
+
+        $momentum.worker.postMessage({
+            type: 'setTimeout',
+            delay: delay,
+            id: intervalId
+        });
+        return intervalId;
+    }
+
+    function patchedClearTimeout(intervalId) {
+        $momentum.worker.postMessage({
+            type: 'clearInterval',
+            id: intervalId
+        });
+
+        delete $momentum.idToCallback[intervalId];
+    }
+
+    $momentum.worker.onmessage = function (e) {
+        if (e.data.type === 'fire') {
+            $momentum.idToCallback[e.data.id]();
+        }
+    };
+
+    window.$momentum = $momentum;
+
+    window.setInterval = patchedSetInterval;
+    window.clearInterval = patchedClearInterval;
+    window.setTimeout = patchedSetTimeout;
+    window.clearTimeout = patchedClearTimeout;
+})();
+
+
+
 
 const start_work_time = () => {
     const work_min_display = document.getElementById("work_mins");
@@ -72,7 +186,7 @@ const start_work_time = () => {
 
 
         function () {
-            self.postMessage('tick');
+            postMessage('tick');
             document.getElementById("start_work_button").disabled = true;
             document.getElementById("start_break_button").disabled = true;
             //console.log(work_sec);
@@ -106,6 +220,57 @@ const start_work_time = () => {
 
 }
 
+/*const start_work_time = () => {
+    const work_min_display = document.getElementById("work_mins");
+    const work_sec_display = document.getElementById("work_sec");
+    const cycle_count_display = document.getElementById("cycleCount");
+
+    let work_min = parseInt(work_min_display.textContent);
+    let cycle_count = parseInt(cycle_count_display.textContent);
+    let temp = work_min;
+    let work_sec = 60;
+
+    work_min_display.innerHTML = work_min - 1;
+
+    let intervalWorker = new Worker('worker.js');
+    intervalWorker.onmessage = function () {
+
+        document.getElementById("start_work_button").disabled = true;
+        document.getElementById("start_break_button").disabled = true;
+        //console.log(work_sec);
+        work_sec--;
+        work_sec_display.innerHTML = work_sec;
+        if (work_sec == 0) {
+            work_sec += 60;
+            //console.log("done")
+            work_min--;
+            work_min_display.innerHTML = work_min;
+            if (work_min == 0) {
+
+
+                play_alarm();
+
+                clearInterval(intervalWorker);
+                cycle_count += 1;
+                //console.log(cycle_count);
+                cycle_count_display.innerHTML = cycle_count;
+                work_min = temp;
+                work_min_display.innerHTML = work_min;
+                document.getElementById("start_work_button").disabled = false;
+                document.getElementById("start_break_button").disabled = false;
+
+            }
+
+
+        }
+
+
+    };
+
+    document.getElementById("start_work_button").disabled = false;
+
+
+}*/
 
 
 const start_break_time = () => {
