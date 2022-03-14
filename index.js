@@ -181,13 +181,13 @@ const start_work_time = () => {
     let work_sec = 60;
 
     work_min = work_min - 1;
-    work_min_display.innerHTML = work_min - 1;
+    work_min_display.innerHTML = work_min;
 
     let time = window.setInterval(
 
 
         function () {
-            Worker.postMessage('tick');
+            postMessage('tick');
             document.getElementById("start_work_button").disabled = true;
             document.getElementById("start_break_button").disabled = true;
             //console.log(work_sec);
@@ -285,11 +285,10 @@ const start_break_time = () => {
     let break_sec = 60;
 
     break_min = break_min - 1;
-    break_min_display.innerHTML = break_min - 1;
+    break_min_display.innerHTML = break_min;
 
     let time = window.setInterval(
         function () {
-            Worker.postMessage('tick');
             document.getElementById("start_break_button").disabled = true;
             document.getElementById("start_work_button").disabled = true;
             //console.log(break_sec);
